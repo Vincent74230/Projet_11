@@ -1,0 +1,75 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content %}
+    <header class="mentions_head">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-10 align-self-end">
+                    <h1 class="text-uppercase text-white font-weight-bold">Aliment de substitution:</h1>
+                    <img src={{product.image}}>
+                    <hr class="divider my-4" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-section" id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 text-center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Informations nutritionelles</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Quantité</th>
+                            <td>{{infos.quantity}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href = "https://fr.openfoodfacts.org/nutriscore" title ="?">Nutriscore</a></th>
+                            <td>{{infos.nutrition_grades}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href='https://fr.openfoodfacts.org/nova' title="?">Indice nova</a></th>
+                            <td>{{infos.nova_groups}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Valeur énergétique</th>
+                            <td>{{infos.nutriments.energy}} Kj</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Sel pour 100 g</th>
+                            <td>{{infos.nutriments.salt_100g}} g</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Sucre pour 100 g</th>
+                            <td>{{infos.nutriments.sugars_100g}} g</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Lipides pour 100 g</th>
+                            <td>{{infos.nutriments.fat}} g</td>
+                        </tr>
+                        {% if request.user.is_authenticated %}
+                        <tr>
+                            <th scope="row"></th>
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="{% url 'search_register_substitute' UserChoice=product.pk %}"><button type="button" class="btn btn-primary btn-lg">Enregistrer</button></a></th>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-6 text-center">
+            <div class="mt-5">
+                <img src={{infos.image_nutrition_url}}>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}
