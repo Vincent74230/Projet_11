@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 from pathlib import Path
 import os
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,8 +31,7 @@ else:
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "vincentnow-purbeurre.herokuapp.com",
-    ".herokuapps.com",
+    "159.89.17.84",
 ]
 
 
@@ -90,8 +88,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "pur_beurre_db",
-        "USER": "pur_beurre_owner",
-        "PASSWORD": "password",
+        "USER": "vincent",
+        "PASSWORD": "RadeoncoreI7!",
         "HOST": "localhost",
     }
 }
@@ -137,5 +135,3 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-
-django_heroku.settings(locals())
