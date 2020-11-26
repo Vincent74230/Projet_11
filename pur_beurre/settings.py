@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.get_env("SECRET_KEY", "DEV_SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get("ENV", "DEVELOPMENT") == "PRODUCTION":
@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "159.89.17.84",
+    "207.154.225.46",
 ]
 
 
@@ -84,7 +85,8 @@ WSGI_APPLICATION = "pur_beurre.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+if os.environ.get("ENV", "DEVELOPMENT") == "PRODUCTION":
+    DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "pur_beurre_db",
@@ -93,6 +95,17 @@ DATABASES = {
         "HOST": "localhost",
     }
 }
+else:
+    DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "pur_beurre_db_dev",
+        "USER": "vincent_dev",
+        "PASSWORD": "password",
+        "HOST": "localhost",
+    }
+}
+
 
 
 # Password validation
