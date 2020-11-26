@@ -84,6 +84,7 @@ WSGI_APPLICATION = "pur_beurre.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+# yep, I have 2 different databases..
 
 if os.environ.get("ENV", "DEVELOPMENT") == "PRODUCTION":
     DATABASES = {
