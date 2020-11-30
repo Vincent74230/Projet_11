@@ -19,7 +19,7 @@ class TestPages(TestCase):
     def test_mentions_legales(self):
         response = self.client.get(reverse("home:mentions"))
         self.assertEqual(response.status_code, 200)
-
+'''
 class TestProject(StaticLiveServerTestCase):
     """Automated testing of chrome browser display"""
     def setUp(self):
@@ -37,3 +37,4 @@ class TestProject(StaticLiveServerTestCase):
         
     def tearDown(self):
         self.browser.close()
+'''
