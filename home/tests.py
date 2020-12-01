@@ -19,7 +19,7 @@ class TestPages(TestCase):
     def test_mentions_legales(self):
         response = self.client.get(reverse("home:mentions"))
         self.assertEqual(response.status_code, 200)
-'''
+
 class TestProject(StaticLiveServerTestCase):
     """Automated testing of chrome browser display"""
     def setUp(self):
@@ -32,9 +32,8 @@ class TestProject(StaticLiveServerTestCase):
         page_title = self.browser.find_element_by_tag_name('h1').text,
         'DU GRAS, OUI MAIS DE QUALITÉ'
         self.assertEqual(
-            page_title[0], 'Du gras, oui mais de qualité'
+            page_title[0], 'DU GRAS, OUI MAIS DE QUALITÉ'
             )
         
     def tearDown(self):
         self.browser.close()
-'''
