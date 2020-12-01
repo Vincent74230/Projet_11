@@ -4,6 +4,7 @@ from django.urls import reverse
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from pathlib import Path
+#from django.conf.settings import BASE_DIR
 
 
 #Path to Chrome browser, for Selenium
@@ -23,7 +24,7 @@ class TestPages(TestCase):
 class TestProject(StaticLiveServerTestCase):
     """Automated testing of chrome browser display"""
     def setUp(self):
-        PATH = str(BASE_DIR / 'webdrivers'/'chromedriver')
+        PATH = str(BASE_DIR / 'webdrivers' / 'chromedriver')
         self.browser = webdriver.Chrome(PATH)
 
     def test_home_page_is_displayed_with_chrome(self):
