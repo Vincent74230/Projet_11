@@ -4,11 +4,14 @@ from django.urls import reverse
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from pathlib import Path
-#from django.conf.settings import BASE_DIR
 
-
-#Path to Chrome browser, for Selenium
+#Path to Chrome driver, for Selenium
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+#Options for chrome testing:
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('window-size=1920x1080')
 
 
 class TestPages(TestCase):
@@ -25,7 +28,9 @@ class TestProject(StaticLiveServerTestCase):
     """Automated testing of chrome browser display"""
     def setUp(self):
         PATH = str(BASE_DIR / 'webdrivers' / 'chromedriver')
-        self.browser = webdriver.Chrome(PATH)
+        self.browser = webdriver.Chrome((PATH),options=chrome_options,)
+        self.browser.implicitly_wait(50)
+        self.browser.maximize_window()
 
     def test_home_page_is_displayed_with_chrome(self):
         """Make sure chrome displays home page and get the title"""
