@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 from pathlib import Path
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +33,6 @@ else:
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "159.89.17.84",
     "207.154.225.46",
 ]
 
@@ -96,6 +97,15 @@ if os.environ.get("ENV", "DEVELOPMENT") == "PRODUCTION":
         "HOST": "localhost",
     }
 }
+    sentry_sdk.init(
+    dsn="https://79002166b515488a899494d45ffd463a@o485927.ingest.sentry.io/5544852",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
 else:
     DATABASES = {
     "default": {
@@ -106,7 +116,15 @@ else:
         "HOST": "localhost",
     }
 }
+    sentry_sdk.init(
+    dsn="https://a655e8975a13422294802beb89d1f001@o485927.ingest.sentry.io/5541966",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
 
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
 
 
 # Password validation
