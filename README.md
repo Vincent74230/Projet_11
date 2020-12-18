@@ -41,3 +41,5 @@ ENV=DEVELOPMENT
 9 - Handle staticfiles : `python manage.py collectstatic`
 
 10 - Run the app : `python manage.py runserver`
+
+///
