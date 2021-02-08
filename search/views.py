@@ -15,7 +15,7 @@ def index(request):
         nutriscores = ["a", "b", "c", "d", "e"]
         substitutes_list = []
         try:
-            result = Products.objects.filter(name__icontains=use_question)
+            result = Products.objects.filter(name__icontains=user_question)
             result = result[0]
             categories = result.category
             cat = categories.split(",")
