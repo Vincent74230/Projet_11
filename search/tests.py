@@ -147,6 +147,10 @@ class DetailViewTestCase(TestCase):
         )
         fake_product.save()
 
+    def test_detail_view_displays_correctly(self):
+        response = self.client.get("/search/detail/'3560070824458'")
+        self.assertEqual(response.status_code, 301)
+
     def test_detail_view_right_product(self):
         response = self.client.get("/search/detail/'3560070824458'")
         self.assertEqual(response.status_code, 301)
