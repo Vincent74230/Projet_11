@@ -119,6 +119,7 @@ else:
         "HOST": "localhost",
     }
 }
+"""
     sentry_sdk.init(
     dsn="https://a655e8975a13422294802beb89d1f001@o485927.ingest.sentry.io/5541966",
     integrations=[DjangoIntegration()],
@@ -128,6 +129,7 @@ else:
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+"""
 
 
 # Password validation

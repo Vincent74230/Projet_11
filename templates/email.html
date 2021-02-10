@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    </head>
+    <body>
+      <header class="mentions_head">
+        <div class="container h-100">
+                <div class="col-lg-10 align-self-end">
+                    <h1 class="text-uppercase text-white font-weight-bold">Vos produits favoris</h1>
+                </div>
+        </div>
+    </header>
+    <section>
+    <div>
+        <div>
+            {% for element in user_favourites %}
+            <div>
+              <p>{{element.name}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    </section>
+      <footer class="bg-light py-5">
+      <div class = "container">
+        <div class = "row">
+          <div class = "col">
+            <ul class = "text-inline text-center">
+              <li class = "list-inline-item">Revenez-nous vite</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    </footer>
+    </body>
+</html>
