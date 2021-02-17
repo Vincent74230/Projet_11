@@ -2,20 +2,23 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     </head>
     <body>
-      <header class="mentions_head">
-        <div class="container h-100">
-                <div class="col-lg-10 align-self-end">
-                    <h1 class="text-uppercase text-white font-weight-bold">Vos produits favoris</h1>
+      <header>
+        <div>
+                <div>
+                    <h1>Vos produits favoris</h1>
                 </div>
         </div>
     </header>
     <section>
-      <img src='https://imgs.xkcd.com/comics/vaccine_ordering.png'>
-    <div class="container">
+    <img src="https://cdn-assets-cloud.frontify.com/s3/frontify-cloud-files-us/eyJwYXRoIjoiZnJvbnRpZnlcL2FjY291bnRzXC9hN1wvODI0MzVcL3Byb2plY3RzXC8xMTM5MDRcL2Fzc2V0c1wvZmRcLzExMTA0MjRcL2M0NzdmMWRjNTcwYmRiMmVjMGRlMjhjZDE4NzVhMDI1LTE0Nzc1NzMzNjYucG5nIn0:cloud:ImMkg2ihzHqyAlmUfSuFOhZQdCa9RTUA0lD9FBU6zqk?width=200">
+    <div>
+      <div>
+        <p>Voici la liste de vos produits favoris:<br></p><br>
+      </div>
         <div>
             {% for element in user_favourites %}
             <div>
@@ -25,17 +28,9 @@
         </div>
     </div>
     </section>
-      <footer class="bg-light py-5">
-      <div class = "container">
-        <div class = "row">
-          <div class = "col">
-            <ul class = "text-inline text-center">
-              <li class = "list-inline-item">Revenez-nous vite</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <footer>
+      <p>Nos produits sont régulièrement mis à jour.</p>
+      <p>N'hésitez pas à revenir sur notre site pour en découvrir d'autres</p>
     </footer>
     </body>
 </html>

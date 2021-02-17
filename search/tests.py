@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import Products
 from django.contrib.auth.models import User
 from django.core.management import call_command
+from django.core import mail
 import unittest
 from unittest import mock
 
@@ -160,3 +161,45 @@ class DetailViewTestCase(TestCase):
     def test_detail_view_wrong_product(self):
         response = self.client.get("/search/detail/2148/")
         self.assertEqual(response.status_code, 404)
+
+
+class EmailTest(TestCase):
+    """Tests email sending"""
+    def setUp(self):
+        fake_user = User.objects.create_user(
+            username="Vincent74230",
+            password="Testpassword1",
+            first_name="Vincent",
+            last_name="VinceNow",
+            email="vincent.nowak@hotmail.fr",
+        )
+        fake_user.save()
+
+        fake_product = Products.objects.create(
+            barcode="3560070824458",
+            image="https://static.openfoodfacts.org/images/products/500/015/940/7236/front_fr.19.100.jpg",
+            category="Sodas",
+            name="Orangina",
+            nutriscore="e",
+        )
+        fake_product.save()
+
+        favourite_product = Products.objects.filter(barcode="3560070824458")
+        favourite_product = favourite_product[0]
+        favourite_product.favourites.add(fake_user.id)
+
+
+    def test_send_simple_email(self):
+        # Send message.
+        mail.send_mail(
+            'Subject here', 'Here is the message.',
+            'from@example.com', ['to@example.com'],
+            fail_silently=False,
+        )
+
+        # Test that one message has been sent.
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_send_email(self):
+        call_command("email")
+        self.assertEqual(len(mail.outbox), 1)
