@@ -135,7 +135,6 @@ class SearchRegisterSubstituteTestCase(TestCase):
     def test_register_sub_anonymousUser_right_product(self):
         self.client.logout()
         response = self.client.get("/search/register_sub/3560070824458/")
-        #self.assertRedirects(response, '/user_account/login', status_code=302, target_status_code=200)
         self.assertEqual(response.status_code, 404)
 
 class DetailViewTestCase(TestCase):
@@ -175,6 +174,15 @@ class EmailTest(TestCase):
         )
         fake_user.save()
 
+        fake_user_2 = User.objects.create_user(
+            username="Ronald38",
+            password="Testpassword2",
+            first_name="Ronald",
+            last_name="McDonald",
+            email="",
+        )
+        fake_user_2.save()        
+
         fake_product = Products.objects.create(
             barcode="3560070824458",
             image="https://static.openfoodfacts.org/images/products/500/015/940/7236/front_fr.19.100.jpg",
@@ -189,17 +197,18 @@ class EmailTest(TestCase):
         favourite_product.favourites.add(fake_user.id)
 
 
-    def test_send_simple_email(self):
-        # Send message.
+    def test_sending_simple_email(self):
         mail.send_mail(
             'Subject here', 'Here is the message.',
             'from@example.com', ['to@example.com'],
             fail_silently=False,
         )
-
-        # Test that one message has been sent.
         self.assertEqual(len(mail.outbox), 1)
 
-    def test_send_email(self):
+    def test_sending_email(self):
         call_command("email")
         self.assertEqual(len(mail.outbox), 1)
+        users=User.objects.all()
+        self.assertEqual(mail.outbox[0].subject, "Bonjour {}, c'est Pur Beurre!".format(users[0].username))
+        html_content = mail.outbox[0].alternatives[0][0]
+        self.assertTrue('Orangina' in html_content)

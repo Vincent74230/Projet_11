@@ -30,7 +30,6 @@ class SignUpTest(TestCase):
                 "password2": "Radeon74"
             },
         )
-        #import code; code.interact(local=dict(globals(), **locals()))
         self.assertRedirects(response, "/user_account/login", status_code=302, target_status_code=200)
 
 
@@ -66,5 +65,4 @@ class LoginTest(TestCase):
             {"username": "Vincent74", "password": "Openclassrooms1"},
         )
         response = self.client.get("/user_account/logout")
-        #import code; code.interact(local=dict(globals(), **locals()))
         self.assertRedirects(response, "/user_account/login", status_code=302, target_status_code=200)
