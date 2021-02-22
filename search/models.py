@@ -14,3 +14,15 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+class NewsLetter(models.Model):
+    """One-to-one field to User, contains newletter boolean"""
+    newsletter = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        )
+    newsletter_registration = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s registration to newsletter is %s" % (self.newsletter.username, self.newsletter_registration)
