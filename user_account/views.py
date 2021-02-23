@@ -10,8 +10,18 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     """If user is logged in, shows user_account index page"""
-    context = {}
     if request.user.is_authenticated:
+        if request.method == 'POST':
+            context = {}
+            if request.POST.get('newsletter')=='unsubscribe':
+                q = NewsLetter(request.user.id, newsletter_registration=False)
+                q.save()
+                return render(request, "user_account/index.html", context)
+            elif request.POST.get('newsletter')=='subscribe':
+                q = NewsLetter(request.user.id, newsletter_registration=True)
+                q.save()
+                return render(request, "user_account/index.html", context)
+        context = {}
         return render(request, "user_account/index.html", context)
     else:
         return redirect("/home")
