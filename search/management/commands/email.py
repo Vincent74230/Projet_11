@@ -16,9 +16,8 @@ class Command(
     def handle(self, *args, **options):
         all_users=User.objects.all()
         for user in all_users:
-            if not(user.email):
+            if not(user.email and user.newsletter.newsletter_registration):
                 continue
-                
             fav = Products.objects.filter(favourites=user.id)
             user_favourites = []
             for element in fav:

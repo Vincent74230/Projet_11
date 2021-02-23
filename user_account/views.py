@@ -1,6 +1,8 @@
 """Contains functions of user_account app"""
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from search.models import NewsLetter
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -20,8 +22,21 @@ def register_page(request):
     Registration = RegisterForm()
     if request.method == "POST":
         Registration = RegisterForm(request.POST)
+        newsletter = request.POST.get('newsletter')
         if Registration.is_valid():
             Registration.save()
+            if newsletter:
+                user = Registration.cleaned_data.get("username")
+                user_id = User.objects.filter(username=user)
+                user_id = user_id[0].id
+                q = NewsLetter(user_id, newsletter_registration=True)
+                q.save()
+            else:
+                user = Registration.cleaned_data.get("username")
+                user_id = User.objects.filter(username=user)
+                user_id = user_id[0].id
+                q = NewsLetter(user_id, newsletter_registration=False)
+                q.save()
             user = Registration.cleaned_data.get("username")
             messages.success(request, "Votre compte a bien été créé" + user)
             return redirect("login")

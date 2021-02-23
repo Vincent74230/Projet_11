@@ -1,7 +1,7 @@
 """Search app test module"""
 from django.test import TestCase
 from django.urls import reverse
-from .models import Products
+from .models import Products, NewsLetter
 from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.core import mail
@@ -181,7 +181,16 @@ class EmailTest(TestCase):
             last_name="McDonald",
             email="",
         )
-        fake_user_2.save()        
+        fake_user_2.save()
+
+        fake_user_3 = User.objects.create_user(
+            username="Ronald380",
+            password="Testpassword3",
+            first_name="Ronald",
+            last_name="McDonald",
+            email="vincent.nowaczyk@protonmail.com",
+        )
+        fake_user_3.save()
 
         fake_product = Products.objects.create(
             barcode="3560070824458",
@@ -196,6 +205,15 @@ class EmailTest(TestCase):
         favourite_product = favourite_product[0]
         favourite_product.favourites.add(fake_user.id)
 
+        users = User.objects.all()
+        for user in users:
+            user_id = user.id
+            q=NewsLetter(user_id, newsletter_registration=True)
+            q.save()
+
+        no_newsletter_user = User.objects.filter(username="Ronald380")
+        q = NewsLetter(no_newsletter_user[0].id, newsletter_registration=False)
+        q.save()
 
     def test_sending_simple_email(self):
         mail.send_mail(
