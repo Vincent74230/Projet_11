@@ -38,7 +38,6 @@ class IndexPageTest(TestCase):
 
         response = self.client.post(reverse("user_account"), 
             {"newsletter" : "unsubscribe"})
-        #import code; code.interact(local=dict(globals(), **locals()))
         user_newsletter_registration = User.objects.filter(username='Vincent74')
         user_newsletter_registration = user_newsletter_registration[0].newsletter.newsletter_registration
         self.assertFalse(user_newsletter_registration)
