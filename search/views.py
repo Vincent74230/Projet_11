@@ -19,9 +19,9 @@ def index(request):
             result = result[0]
             categories = result.category
             cat = categories.split(",")
-            cat = cat[-1]#We pick substitutes on the last tag of 'categories'
+            cat = cat[-1]  # We pick substitutes on the last tag of 'categories'
             substitutes = Products.objects.filter(category__icontains=cat)
-            for nutriscore in nutriscores:#We make a list with best substitues ahead
+            for nutriscore in nutriscores:  # We make a list with best substitues ahead
                 sub = substitutes.filter(nutriscore=nutriscore)
                 for element in sub:
                     substitutes_list.append(element)

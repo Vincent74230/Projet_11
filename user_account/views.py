@@ -11,20 +11,20 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     """If user is logged in, shows user_account index page"""
     if request.user.is_authenticated:
-        if request.method == 'POST':
+        if request.method == "POST":
             context = {}
-            if request.POST.get('newsletter')=='unsubscribe':
-                q = NewsLetter(request.user.id, newsletter_registration=False)
-                q.save()
+            if request.POST.get("newsletter") == "unsubscribe":
+                newsletter = NewsLetter(request.user.id, newsletter_registration=False)
+                newsletter.save()
                 return render(request, "user_account/index.html", context)
-            elif request.POST.get('newsletter')=='subscribe':
-                q = NewsLetter(request.user.id, newsletter_registration=True)
-                q.save()
+            elif request.POST.get("newsletter") == "subscribe":
+                newsletter = NewsLetter(request.user.id, newsletter_registration=True)
+                newsletter.save()
                 return render(request, "user_account/index.html", context)
         context = {}
         return render(request, "user_account/index.html", context)
     else:
-        return redirect("/home")
+        return redirect("/")
 
 
 def register_page(request):
@@ -32,21 +32,21 @@ def register_page(request):
     Registration = RegisterForm()
     if request.method == "POST":
         Registration = RegisterForm(request.POST)
-        newsletter = request.POST.get('newsletter')
+        newsletter_choice = request.POST.get("newsletter")
         if Registration.is_valid():
             Registration.save()
-            if newsletter:
+            if newsletter_choice:
                 user = Registration.cleaned_data.get("username")
                 user_id = User.objects.filter(username=user)
                 user_id = user_id[0].id
-                q = NewsLetter(user_id, newsletter_registration=True)
-                q.save()
+                newsletter = NewsLetter(user_id, newsletter_registration=True)
+                newsletter.save()
             else:
                 user = Registration.cleaned_data.get("username")
                 user_id = User.objects.filter(username=user)
                 user_id = user_id[0].id
-                q = NewsLetter(user_id, newsletter_registration=False)
-                q.save()
+                newsletter = NewsLetter(user_id, newsletter_registration=False)
+                newsletter.save()
             user = Registration.cleaned_data.get("username")
             messages.success(request, "Votre compte a bien été créé" + user)
             return redirect("login")
@@ -60,13 +60,15 @@ def login_page(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)#check if user is in DB
+        user = authenticate(
+            request, username=username, password=password
+        )  # check if user is in DB
         if user is not None:
             login(request, user)
-            return redirect("/")#redirect to homepage
+            return redirect("/")  # redirect to homepage
         else:
             messages.info(
-                request, "Votre nom d'utilisateur ou mote de passe est incorrect"
+                request, "Votre nom d'utilisateur ou mot de passe est incorrect"
             )
 
     context = {}

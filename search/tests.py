@@ -12,8 +12,10 @@ from unittest import mock
 class ExtractCustomCommandTest(TestCase):
     """Test of custom command 'extract' the fetches products on Openfoodfacts
     application and logs on DB"""
+
     class MockRequestGet:
         """Mock of request.get to OFF API"""
+
         def __init__(self, url, params=None, headers=None):
             self.status_code = 200
 
@@ -64,6 +66,7 @@ class ExtractCustomCommandTest(TestCase):
 
 class SearchIndexPageTestCase(TestCase):
     """Tests of search main page display"""
+
     def test_search_index_view(self):
         response = self.client.get(reverse("search_index"))
         self.assertEqual(response.status_code, 200)
@@ -77,7 +80,8 @@ class SearchIndexPageTestCase(TestCase):
 
 
 class SearchFavouriteTestCase(TestCase):
-    """Tests of user's favourites retrieving""" 
+    """Tests of user's favourites retrieving"""
+
     def setUp(self):
         fake_user = User.objects.create_user(
             username="Vincent74230",
@@ -96,12 +100,13 @@ class SearchFavouriteTestCase(TestCase):
     def test_favourite_page_anonymous_user(self):
         self.client.logout()
         response = self.client.get("search_favourites")
-        #import code; code.interact(local=dict(globals(), **locals()))
+        # import code; code.interact(local=dict(globals(), **locals()))
         self.assertEqual(response.status_code, 404)
 
 
 class SearchRegisterSubstituteTestCase(TestCase):
     """Tests of user's favourites register in DB"""
+
     def setUp(self):
         """Just a mock of a fake user and product"""
         fake_user = User.objects.create_user(
@@ -137,8 +142,10 @@ class SearchRegisterSubstituteTestCase(TestCase):
         response = self.client.get("/search/register_sub/3560070824458/")
         self.assertEqual(response.status_code, 404)
 
+
 class DetailViewTestCase(TestCase):
     """Tests of the detail view of a product"""
+
     def setUp(self):
         fake_product = Products.objects.create(
             barcode="3560070824458",
@@ -164,6 +171,7 @@ class DetailViewTestCase(TestCase):
 
 class EmailTest(TestCase):
     """Tests email sending"""
+
     def setUp(self):
         fake_user = User.objects.create_user(
             username="Vincent74230",
@@ -208,7 +216,7 @@ class EmailTest(TestCase):
         users = User.objects.all()
         for user in users:
             user_id = user.id
-            q=NewsLetter(user_id, newsletter_registration=True)
+            q = NewsLetter(user_id, newsletter_registration=True)
             q.save()
 
         no_newsletter_user = User.objects.filter(username="Ronald380")
@@ -217,8 +225,10 @@ class EmailTest(TestCase):
 
     def test_sending_simple_email(self):
         mail.send_mail(
-            'Subject here', 'Here is the message.',
-            'from@example.com', ['to@example.com'],
+            "Subject here",
+            "Here is the message.",
+            "from@example.com",
+            ["to@example.com"],
             fail_silently=False,
         )
         self.assertEqual(len(mail.outbox), 1)
@@ -226,7 +236,10 @@ class EmailTest(TestCase):
     def test_sending_email(self):
         call_command("email")
         self.assertEqual(len(mail.outbox), 1)
-        users=User.objects.all()
-        self.assertEqual(mail.outbox[0].subject, "Bonjour {}, c'est Pur Beurre!".format(users[0].username))
+        users = User.objects.all()
+        self.assertEqual(
+            mail.outbox[0].subject,
+            "Bonjour {}, c'est Pur Beurre!".format(users[0].username),
+        )
         html_content = mail.outbox[0].alternatives[0][0]
-        self.assertTrue('Orangina' in html_content)
+        self.assertTrue("Orangina" in html_content)

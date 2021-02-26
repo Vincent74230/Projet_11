@@ -1,0 +1,8 @@
+# .coveragerc to control coverage.py
+[run]
+branch = true
+omit = */tests/*, */migrations/*, */urls.py, */settings.py, */wsgi.py, manage.py
+source = .
+
+[report]
+show_missing = true
